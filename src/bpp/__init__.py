@@ -37,7 +37,7 @@ def verify(code: list) -> bool:
     return len(stack) == 0
 
 
-def run(code: str):
+def run(code: str) -> bool:
     code = strip(code)
 
     if not verify(code):
@@ -48,14 +48,14 @@ def run(code: str):
     code_pointer = 0
 
     loop_stack = []
-    memory = [0]*30000
+    memory = [0] * 30000
 
     while code_pointer < len(code):
         symbol = code[code_pointer]
 
         if symbol == Symbol.ENTER_LOOP:
             if memory[pointer] != 0:
-                loop_stack.append(code_pointer+1)
+                loop_stack.append(code_pointer + 1)
             else:
                 while code[code_pointer] != Symbol.EXIT_LOOP:
                     code_pointer += 1
@@ -83,4 +83,4 @@ def run(code: str):
             memory[pointer] = ord(sys.stdin.read(1))
 
         code_pointer += 1
-
+    return None

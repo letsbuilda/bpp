@@ -1,0 +1,36 @@
+name: "Python CI"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  pre-commit:
+    uses: darbiadev/.github/.github/workflows/generic-precommit.yaml@b0749d50c2f32c5672a7c459f55f39416941c26d # v5.1.0
+
+  lint:
+    needs: pre-commit
+    uses: darbiadev/.github/.github/workflows/python-lint.yaml@b0749d50c2f32c5672a7c459f55f39416941c26d # v5.1.0
+
+  test:
+    needs: lint
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        python-version: [ "3.11" ]
+
+    uses: darbiadev/.github/.github/workflows/python-test.yaml@b0749d50c2f32c5672a7c459f55f39416941c26d # v5.1.0
+    with:
+      os: ${{ matrix.os }}
+      python-version: ${{ matrix.python-version }}
+
+  docs:
+    # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    uses: darbiadev/.github/.github/workflows/github-pages-python-sphinx.yaml@b0749d50c2f32c5672a7c459f55f39416941c26d # v5.1.0
