@@ -94,32 +94,22 @@ class Interpreter:
         match token:
             case Token.INCREMENT_POINTER:
                 self.increment_pointer()
-                print(f"Incremented pointer, now at {self.current_position}")
             case Token.DECREMENT_POINTER:
                 self.decrement_pointer()
-                print(f"Decremented pointer, now at {self.current_position}")
             case Token.INCREMENT_BYTE:
                 self.increment_byte_at_current_pointer()
-                print(f"Incremented byte, now at {self.memory[self.current_position]}")
             case Token.DECREMENT_BYTE:
                 self.decrement_byte_at_current_pointer()
-                print(f"Decremented byte, now at {self.memory[self.current_position]}")
             case Token.OUTPUT_BYTE:
                 self.output_current_byte()
-                print(f"Outputted byte, now at {self.memory[self.current_position]}")
             case Token.INPUT_BYTE:
                 self.get_input()
-                print("Got input")
             case Token.LOOP_START:
                 if self.memory[self.current_position] == 0:
-                    print("Skipped loop")
                     return ResultState.JUMP_FORWARD
-                print("Entered loop")
             case Token.LOOP_END:
                 if self.memory[self.current_position] != 0:
-                    print("Restarted loop")
                     return ResultState.JUMP_BACKWARD
-                print("Exited loop")
         return ResultState.SUCCESS
 
     def run(self: Self, code: str) -> None:
@@ -135,11 +125,15 @@ class Interpreter:
                 last_loop_start = self.current_index
             match self.handle_token(token):
                 case ResultState.SUCCESS:
-                    continue
+                    pass
                 case ResultState.JUMP_BACKWARD:
-                    self.current_index = last_loop_start  # noqa: PLW2901 - That's the point of this line
+                    self.current_index = last_loop_start
                 case ResultState.JUMP_FORWARD:
                     for i in range(self.current_index, len(tokens)):
                         if tokens[i] == Token.LOOP_END:
-                            self.current_index = i  # noqa: PLW2901 - That's the point of this line
+                            self.current_index = i
                             break
+
+            self.current_index += 1
+            if self.current_index >= len(tokens):
+                break
