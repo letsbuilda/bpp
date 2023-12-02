@@ -54,3 +54,17 @@ def test_can_input_letter(monkeypatch) -> None:  # noqa: ANN001 -- pytest builti
     monkeypatch.setattr("sys.stdin", StringIO("a"))
     interpreter.get_input()
     assert interpreter.memory[interpreter.current_position] == ASCII_LOWERCASE_A
+
+
+@pytest.mark.parametrize(
+    ("code", "error_message"),
+    [
+        ("[", "Syntax error: Unclosed bracket in line 1 at char 1!"),
+        ("]", "Syntax error: Unexpected closing bracket in line 1 at char 1!"),
+    ],
+)
+def test_invalid_syntax_fails(code: str, error_message: str) -> None:
+    """Make sure that invalid syntax fails."""
+    interpreter = Interpreter()
+    with pytest.raises(BrainfuckSyntaxError, match=error_message):
+        interpreter.run(code)

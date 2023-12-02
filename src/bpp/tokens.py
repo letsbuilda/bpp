@@ -1,5 +1,6 @@
 """Tokens for the interpreter."""
 
+from collections.abc import Sequence
 from enum import Enum
 from typing import Self
 
@@ -23,3 +24,14 @@ class Token(Enum):
             return cls(character)
         except ValueError:
             return None
+
+
+def tokenize(code: str) -> Sequence[Token]:
+    """Convert text to tokens."""
+    tokens = []
+    for character in code:
+        token = Token.from_character(character)
+        if token is None:
+            continue
+        tokens.append(token)
+    return tokens

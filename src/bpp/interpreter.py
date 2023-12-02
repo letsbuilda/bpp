@@ -6,7 +6,7 @@ from enum import Enum, auto
 from typing import NoReturn, Self
 
 from .exceptions import BrainfuckSyntaxError
-from .tokens import Token
+from .tokens import Token, tokenize
 
 
 class ResultState(Enum):
@@ -15,17 +15,6 @@ class ResultState(Enum):
     SUCCESS = auto()
     JUMP_FORWARD = auto()
     JUMP_BACKWARD = auto()
-
-
-def tokenize(code: str) -> Sequence[Token]:
-    """Convert text to tokens."""
-    tokens = []
-    for character in code:
-        token = Token.from_character(character)
-        if token is None:
-            continue
-        tokens.append(token)
-    return tokens
 
 
 def validate_syntax(syntax: Sequence[Sequence[Token]]) -> None | NoReturn:
