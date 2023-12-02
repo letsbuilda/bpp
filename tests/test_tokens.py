@@ -9,6 +9,7 @@ from bpp import Token, tokenize
     [
         ("", []),
         ("><", [Token.INCREMENT_POINTER, Token.DECREMENT_POINTER]),
+        (">hi I'm a comment!!<", [Token.INCREMENT_POINTER, Token.DECREMENT_POINTER]),
         ("[><]", [Token.LOOP_START, Token.INCREMENT_POINTER, Token.DECREMENT_POINTER, Token.LOOP_END]),
     ],
 )
