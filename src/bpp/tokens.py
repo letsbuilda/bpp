@@ -14,8 +14,8 @@ class Token(Enum):
     DECREMENT_BYTE = "-"
     OUTPUT_BYTE = "."
     INPUT_BYTE = ","
-    ENTER_LOOP = "["
-    EXIT_LOOP = "]"
+    LOOP_START = "["
+    LOOP_END = "]"
 
     @classmethod
     def from_character(cls: type[Self], character: str) -> Self | None:
