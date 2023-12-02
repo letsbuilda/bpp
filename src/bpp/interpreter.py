@@ -3,7 +3,7 @@
 import sys
 from collections.abc import Sequence
 from enum import Enum, auto
-from typing import NoReturn, Self
+from typing import Self
 
 from .exceptions import BrainfuckSyntaxError
 from .tokens import Token, tokenize
@@ -17,7 +17,7 @@ class ResultState(Enum):
     JUMP_BACKWARD = auto()
 
 
-def validate_syntax(syntax: Sequence[Sequence[Token]]) -> None | NoReturn:
+def validate_syntax(syntax: Sequence[Sequence[Token]]) -> None:
     """Validate the given syntax."""
     in_loop = False
     loop_started_at_line = 0
@@ -42,7 +42,6 @@ def validate_syntax(syntax: Sequence[Sequence[Token]]) -> None | NoReturn:
             f"{loop_started_at_line + 1} at char {loop_started_at_character + 1}!"
         )
         raise BrainfuckSyntaxError(msg)
-    return None
 
 
 class Interpreter:
