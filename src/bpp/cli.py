@@ -8,12 +8,12 @@ app = typer.Typer()
 
 
 @app.callback()
-def callback():
-    """Brainfuck++"""
+def callback() -> None:
+    """Brainfuck++."""
 
 
 @app.command()
-def run(source_file: typer.FileText):
+def run(source_file: typer.FileText) -> None:
     """Execute a file."""
     source = source_file.read()
     output = Interpreter().run(source)
