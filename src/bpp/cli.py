@@ -14,6 +14,7 @@ def callback():
 
 @app.command()
 def run(source_file: typer.FileText):
-    """Execute a file"""
+    """Execute a file."""
     source = source_file.read()
-    Interpreter().run(source)
+    output = Interpreter().run(source)
+    typer.echo(output)
