@@ -12,6 +12,7 @@ from bpp import Interpreter
     [
         (Path("./examples/hello-world.bf"), "Hello, World!"),
         (Path("./examples/jump.bf"), ""),
+        (Path("./examples/decrement_not_in_memory.bf"), ""),
     ],
 )
 def test_example_files(example_file: Path, expected_result: str) -> None:
