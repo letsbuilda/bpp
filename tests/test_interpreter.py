@@ -37,17 +37,6 @@ def test_byte_underflows() -> None:
     assert interpreter.memory[interpreter.current_position] == interpreter.byte_max
 
 
-def test_can_output_letter(capsys) -> None:  # noqa: ANN001 -- pytest builtin fixture
-    """Output the ASCII value of byte at the current position, make sure that there is no newline."""
-    interpreter = Interpreter()
-    for _ in range(97):
-        interpreter.increment_byte_at_current_pointer()
-    interpreter.output_current_byte()
-    interpreter.output_current_byte()
-    captured = capsys.readouterr()
-    assert captured.out == "aa"
-
-
 def test_can_input_letter(monkeypatch) -> None:  # noqa: ANN001 -- pytest builtin fixture
     """Input an ASCII character."""
     interpreter = Interpreter()

@@ -3,6 +3,7 @@
 import sys
 from collections.abc import Sequence
 from enum import Enum, auto
+from io import StringIO
 from typing import Self
 
 from .exceptions import BrainfuckSyntaxError
@@ -53,6 +54,7 @@ class Interpreter:
         self.current_position = 0
         self.byte_min = byte_min
         self.byte_max = byte_max
+        self.output = StringIO()
 
     def increment_pointer(self: Self) -> None:
         """Increment the pointer."""
@@ -83,7 +85,7 @@ class Interpreter:
 
     def output_current_byte(self: Self) -> None:
         """Output the ASCII value of the byte at the current position."""
-        print(chr(self.memory[self.current_position]), end="")  # noqa: T201
+        self.output.write(chr(self.memory[self.current_position]))
 
     def get_input(self: Self) -> None:
         """Output the ASCII value of the byte at the current position."""
@@ -112,7 +114,7 @@ class Interpreter:
                     return ResultState.JUMP_BACKWARD
         return ResultState.SUCCESS
 
-    def run(self: Self, code: str) -> None:
+    def run(self: Self, code: str) -> str:
         """Run code."""
         syntax = [tokenize(line) for line in code.split("\n")]
         validate_syntax(syntax)
@@ -137,3 +139,4 @@ class Interpreter:
             self.current_index += 1
             if self.current_index >= len(tokens):
                 break
+        return self.output.getvalue()
