@@ -50,7 +50,7 @@ class Interpreter:
 
     def __init__(self: Self, byte_min: int = 0, byte_max: int = 255) -> None:
         self.current_index = 0
-        self.memory: dict[int, int] = {}
+        self.memory: dict[int, int] = {0: 0}
         self.current_position = 0
         self.byte_min = byte_min
         self.byte_max = byte_max
