@@ -21,16 +21,17 @@ bpp = "bpp.cli:app"
 
 [project.optional-dependencies]
 dev = [
-    "pre-commit==3.6.0",
-    "ruff==0.1.9",
+    "pre-commit==3.6.1",
+    "ruff==0.2.1",
+    "mypy==1.8.0",
 ]
 tests = [
-    "pytest==7.4.4",
+    "pytest==8.0.0",
     "pytest-randomly==3.15.0",
 ]
 docs = [
     "sphinx==7.2.6",
-    "furo==2023.9.10",
+    "furo==2024.1.29",
     "sphinx-autoapi==3.0.0",
     "releases==2.1.1",
 ]
@@ -43,13 +44,15 @@ build-backend = "setuptools.build_meta"
 preview = true
 unsafe-fixes = true
 target-version = "py311"
-select = ["ALL"]
 line-length = 120
+
+[tool.ruff.lint]
+select = ["ALL"]
 ignore = [
     "CPY001", # (Missing copyright notice at top of file) - No license
 ]
 
-[tool.ruff.extend-per-file-ignores]
+[tool.ruff.lint.extend-per-file-ignores]
 "docs/*" = [
     "INP001", # (File `docs/*.py` is part of an implicit namespace package. Add an `__init__.py`.) - Docs are not modules
 ]
@@ -58,7 +61,7 @@ ignore = [
     "S101", # (Use of `assert` detected) - Yes, that's the point
 ]
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "numpy"
 
 [tool.coverage.run]
