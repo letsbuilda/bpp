@@ -5,11 +5,9 @@ on:
     types: [published]
 
 jobs:
-  build-publish:
-    name: "Build and publish Python 🐍 distributions 📦 to PyPI"
+  build:
+    name: "Build distribution 📦"
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
 
     steps:
       - name: "Checkout repository"
@@ -36,14 +34,30 @@ jobs:
           --outdir dist/
 
       - name: "Upload packages"
-        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
+        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8 # v4.3.0
         with:
-          name: packages
-          path: dist
+          name: python-package-distributions
+          path: dist/
 
-      - name: "Publish distribution 📦 to PyPI"
-        uses: pypa/gh-action-pypi-publish@2f6f737ca5f74c637829c0f5c3acd0e29ea5e8bf # v1.8.11
-        with:
-          skip-existing: true
+  publish-to-pypi:
+    name: "Publish Python 🐍 distribution 📦 to PyPI"
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/letsbuilda-pypi/
+    permissions:
+      id-token: write
+
+    steps:
+    - name: "Download dists"
+      uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4.1.1
+      with:
+        name: python-package-distributions
+        path: dist/
+
+    - name: "Publish distribution 📦 to PyPI"
+      uses: pypa/gh-action-pypi-publish@2f6f737ca5f74c637829c0f5c3acd0e29ea5e8bf # v1.8.11
+      with:
           verbose: true
           print-hash: true
