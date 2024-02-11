@@ -1,7 +1,7 @@
 bpp
-===================
+===
 
-because why noy
+because why not
 
 Module Index
 ------------
@@ -16,7 +16,6 @@ Module Index
    :hidden:
 
    changelog
-   history
 
 Extras
 ------
@@ -24,4 +23,3 @@ Extras
 * :ref:`genindex`
 * :ref:`search`
 * :doc:`changelog`
-* :doc:`history`
