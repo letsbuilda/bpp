@@ -21,12 +21,12 @@ bpp = "bpp.cli:app"
 
 [project.optional-dependencies]
 dev = [
-    "pre-commit==3.6.1",
-    "ruff==0.2.1",
+    "pre-commit==3.6.2",
+    "ruff==0.3.0",
     "mypy==1.8.0",
 ]
 tests = [
-    "pytest==8.0.0",
+    "pytest==8.0.2",
     "pytest-randomly==3.15.0",
 ]
 docs = [
