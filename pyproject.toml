@@ -9,7 +9,7 @@ license = { text = "MIT" }
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
 dependencies = [
-    "typer==0.9.0"
+    "typer==0.12.3"
 ]
 
 [project.urls]
@@ -21,17 +21,17 @@ bpp = "bpp.cli:app"
 
 [project.optional-dependencies]
 dev = [
-    "pre-commit==3.6.1",
-    "ruff==0.2.1",
-    "mypy==1.8.0",
+    "pre-commit==3.7.0",
+    "ruff==0.4.2",
+    "mypy==1.10.0",
 ]
 tests = [
-    "pytest==8.0.0",
+    "pytest==8.2.0",
     "pytest-randomly==3.15.0",
 ]
 docs = [
-    "sphinx==7.2.6",
-    "furo==2024.1.29",
+    "sphinx==7.3.7",
+    "furo==2024.4.27",
     "sphinx-autoapi==3.0.0",
     "releases==2.1.1",
 ]
