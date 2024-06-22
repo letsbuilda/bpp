@@ -91,7 +91,7 @@ class Interpreter:
         """Output the ASCII value of the byte at the current position."""
         self.memory[self.current_position] = ord(sys.stdin.read(1))
 
-    def handle_token(self: Self, token: Token) -> ResultState:
+    def handle_token(self: Self, token: Token) -> ResultState:  # noqa: C901
         """Handle a single token."""
         match token:
             case Token.INCREMENT_POINTER:
