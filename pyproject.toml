@@ -47,7 +47,9 @@ target-version = "py312"
 line-length = 120
 
 [tool.ruff.lint]
-select = ["ALL"]
+select = [
+    "ALL",
+]
 ignore = [
     "CPY001", # (Missing copyright notice at top of file) - No license
 ]
