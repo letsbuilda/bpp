@@ -48,7 +48,7 @@ function Invoke-Lint
     pre-commit run --all-files
     python -m ruff check --fix .
     python -m ruff format .
-    python -m mypy src/
+    python -m mypy --strict src/
 }
 
 function Invoke-Test
