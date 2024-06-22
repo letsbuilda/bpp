@@ -24,7 +24,7 @@ def test_example_files(example_file: Path, expected_result: str) -> None:
 
 def test_example_files_with_input(monkeypatch) -> None:  # noqa: ANN001 -- pytest builtin fixture
     """Test example files with input."""
-    source = Path("./examples/echo.bf").read_text()
+    source = Path("./examples/echo.bf").read_text(encoding="locale")
     monkeypatch.setattr("sys.stdin", StringIO("a"))
     interpreter = Interpreter()
     assert interpreter.run(source) == "a"
