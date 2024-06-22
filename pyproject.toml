@@ -22,7 +22,7 @@ bpp = "bpp.cli:app"
 [project.optional-dependencies]
 dev = [
     "pre-commit==3.7.1",
-    "ruff==0.4.7",
+    "ruff==0.4.10",
     "mypy==1.10.0",
 ]
 tests = [
