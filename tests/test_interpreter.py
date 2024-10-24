@@ -3,6 +3,7 @@
 from io import StringIO
 
 import pytest
+
 from bpp import BrainfuckSyntaxError, Interpreter
 
 ASCII_LOWERCASE_A = 97

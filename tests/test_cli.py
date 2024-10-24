@@ -2,8 +2,9 @@
 
 from runpy import run_module
 
-from bpp.cli import app
 from typer.testing import CliRunner
+
+from bpp.cli import app
 
 runner = CliRunner()
 
