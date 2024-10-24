@@ -19,7 +19,12 @@ class Token(Enum):
 
     @classmethod
     def from_character(cls: type[Self], character: str) -> Self | None:
-        """Get the token from a string."""
+        """Get the token from a string.
+
+        Returns
+        -------
+        The token or None if the character is not a token.
+        """
         try:
             return cls(character)
         except ValueError:
@@ -27,7 +32,12 @@ class Token(Enum):
 
 
 def tokenize(code: str) -> Sequence[Token]:
-    """Convert text to tokens."""
+    """Convert text to tokens.
+
+    Returns
+    -------
+    A sequence of tokens.
+    """
     tokens = []
     for character in code:
         token = Token.from_character(character)

@@ -54,7 +54,12 @@ releases_release_uri = f"{REPO_LINK}/releases/tag/v%s"
 
 
 def linkcode_resolve(domain: str, info: dict) -> str | None:
-    """linkcode_resolve."""
+    """linkcode_resolve.
+
+    Returns
+    -------
+    A link to the source code.
+    """
     if domain != "py":
         return None
     if not info["module"]:

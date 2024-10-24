@@ -19,7 +19,13 @@ class ResultState(Enum):
 
 
 def validate_syntax(syntax: Sequence[Sequence[Token]]) -> None:
-    """Validate the given syntax."""
+    """Validate the given syntax.
+
+    Raises
+    ------
+    BrainfuckSyntaxError
+        If the syntax is invalid.
+    """
     in_loop = False
     loop_started_at_line = 0
     loop_started_at_character = 0
@@ -61,7 +67,13 @@ class Interpreter:
         self.current_position += 1
 
     def decrement_pointer(self: Self) -> None:
-        """Decrement the pointer."""
+        """Decrement the pointer.
+
+        Raises
+        ------
+        BrainfuckSyntaxError
+            If the pointer goes negative.
+        """
         if self.current_position == 0:
             msg = "Pointer can't be negative!"
             raise BrainfuckSyntaxError(msg)
@@ -92,7 +104,12 @@ class Interpreter:
         self.memory[self.current_position] = ord(sys.stdin.read(1))
 
     def handle_token(self: Self, token: Token) -> ResultState:  # noqa: C901
-        """Handle a single token."""
+        """Handle a single token.
+
+        Returns
+        -------
+        The state of the interpreter after handling the token
+        """
         match token:
             case Token.INCREMENT_POINTER:
                 self.increment_pointer()
@@ -115,7 +132,12 @@ class Interpreter:
         return ResultState.SUCCESS
 
     def run(self: Self, code: str) -> str:
-        """Run code."""
+        """Run code.
+
+        Returns
+        -------
+        The output of the code.
+        """
         syntax = [tokenize(line) for line in code.split("\n")]
         validate_syntax(syntax)
         tokens = [token for line in syntax for token in line]

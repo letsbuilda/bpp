@@ -1,6 +1,7 @@
 """Test the tokenizer."""
 
 import pytest
+
 from bpp import Token, tokenize
 
 
