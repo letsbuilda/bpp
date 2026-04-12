@@ -76,6 +76,11 @@ branch = true
 source_pkgs = ["bpp"]
 source_dirs = ["tests"]
 
+[tool.coverage.report]
+exclude_also = [
+    "if TYPE_CHECKING:",
+]
+
 [tool.pytest]
 strict = true
 junit_family = "xunit1"
