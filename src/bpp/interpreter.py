@@ -99,7 +99,7 @@ class Interpreter:
 
     def output_current_byte(self: Self) -> None:
         """Output the ASCII value of the byte at the current position."""
-        self.output.write(chr(self.memory[self.current_position]))
+        self.output.write(chr(self.memory.get(self.current_position, 0)))
 
     def get_input(self: Self) -> None:
         """Output the ASCII value of the byte at the current position."""
@@ -126,10 +126,10 @@ class Interpreter:
             case Token.INPUT_BYTE:
                 self.get_input()
             case Token.LOOP_START:
-                if self.memory[self.current_position] == 0:
+                if self.memory.get(self.current_position, 0) == 0:
                     return ResultState.JUMP_FORWARD
             case Token.LOOP_END:
-                if self.memory[self.current_position] != 0:
+                if self.memory.get(self.current_position, 0) != 0:
                     return ResultState.JUMP_BACKWARD
         return ResultState.SUCCESS
 
