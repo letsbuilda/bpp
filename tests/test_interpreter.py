@@ -38,7 +38,7 @@ def test_byte_underflows() -> None:
     assert interpreter.memory[interpreter.current_position] == interpreter.byte_max
 
 
-def test_can_input_letter(monkeypatch) -> None:  # noqa: ANN001 -- pytest builtin fixture
+def test_can_input_letter(monkeypatch) -> None:  # type: ignore[no-untyped-def] # noqa: ANN001 -- pytest builtin fixture
     """Input an ASCII character."""
     interpreter = Interpreter()
     monkeypatch.setattr("sys.stdin", StringIO("a"))

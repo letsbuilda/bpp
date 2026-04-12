@@ -36,7 +36,7 @@ def lints(session: nox.Session) -> None:
     session.run("prek", "run", "--all-files")
     session.run("ruff", "check", "--fix", ".")
     session.run("ruff", "format", ".")
-    session.run("mypy", "--strict", "src/")
+    session.run("mypy", "--strict", "src/", "tests/")
     session.run("ty", "check", ".")
 
 
