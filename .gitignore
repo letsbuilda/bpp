@@ -1,6 +1,3 @@
-# JetBrains
-.idea
-
 # Packaging
 *.egg-info
 dist
@@ -8,6 +5,3 @@ build
 
 # Cache
 __pycache__
-
-# Docs
-docs/build
