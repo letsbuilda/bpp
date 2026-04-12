@@ -1,13 +1,15 @@
 """The interpreter."""
 
 import sys
-from collections.abc import Sequence
 from enum import Enum, auto
 from io import StringIO
-from typing import Self
+from typing import TYPE_CHECKING, Self
 
 from .exceptions import BrainfuckSyntaxError
 from .tokens import Token, tokenize
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
 
 
 class ResultState(Enum):
