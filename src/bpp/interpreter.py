@@ -28,24 +28,24 @@ def validate_syntax(syntax: Sequence[Sequence[Token]]) -> None:
     BrainfuckSyntaxError
         If the syntax is invalid.
     """
-    in_loop = False
+    depth = 0
     loop_started_at_line = 0
     loop_started_at_character = 0
     for line_index, line in enumerate(syntax):
         for character_index, token in enumerate(line):
             if token == Token.LOOP_START:
-                in_loop = True
                 loop_started_at_line = line_index
                 loop_started_at_character = character_index
+                depth += 1
             if token == Token.LOOP_END:
-                if not in_loop:
+                if depth == 0:
                     msg = (
                         "Syntax error: Unexpected closing bracket in line "
-                        f"{loop_started_at_line + 1} at char {loop_started_at_character + 1}!"
+                        f"{line_index + 1} at char {character_index + 1}!"
                     )
                     raise BrainfuckSyntaxError(msg)
-                in_loop = False
-    if in_loop:
+                depth -= 1
+    if depth > 0:
         msg = (
             "Syntax error: Unclosed bracket in line "
             f"{loop_started_at_line + 1} at char {loop_started_at_character + 1}!"
@@ -99,7 +99,7 @@ class Interpreter:
 
     def output_current_byte(self: Self) -> None:
         """Output the ASCII value of the byte at the current position."""
-        self.output.write(chr(self.memory[self.current_position]))
+        self.output.write(chr(self.memory.get(self.current_position, 0)))
 
     def get_input(self: Self) -> None:
         """Output the ASCII value of the byte at the current position."""
@@ -126,10 +126,10 @@ class Interpreter:
             case Token.INPUT_BYTE:
                 self.get_input()
             case Token.LOOP_START:
-                if self.memory[self.current_position] == 0:
+                if self.memory.get(self.current_position, 0) == 0:
                     return ResultState.JUMP_FORWARD
             case Token.LOOP_END:
-                if self.memory[self.current_position] != 0:
+                if self.memory.get(self.current_position, 0) != 0:
                     return ResultState.JUMP_BACKWARD
         return ResultState.SUCCESS
 
@@ -144,21 +144,28 @@ class Interpreter:
         validate_syntax(syntax)
         tokens = [token for line in syntax for token in line]
 
-        last_loop_start = 0
+        # Precompute matching bracket pairs to support nested loops.
+        # validate_syntax guarantees brackets are balanced, so the stack is
+        # always non-empty when a LOOP_END token is encountered here.
+        bracket_map: dict[int, int] = {}
+        stack: list[int] = []
+        for token_index, token in enumerate(tokens):
+            if token == Token.LOOP_START:
+                stack.append(token_index)
+            elif token == Token.LOOP_END:
+                open_bracket_index = stack.pop()
+                bracket_map[open_bracket_index] = token_index
+                bracket_map[token_index] = open_bracket_index
+
         while True:
             token = tokens[self.current_index]
-            if token == Token.LOOP_START:
-                last_loop_start = self.current_index
             match self.handle_token(token):
                 case ResultState.SUCCESS:
                     pass
                 case ResultState.JUMP_BACKWARD:
-                    self.current_index = last_loop_start
+                    self.current_index = bracket_map[self.current_index]
                 case ResultState.JUMP_FORWARD:
-                    for i in range(self.current_index, len(tokens)):
-                        if tokens[i] == Token.LOOP_END:
-                            self.current_index = i
-                            break
+                    self.current_index = bracket_map[self.current_index]
 
             self.current_index += 1
             if self.current_index >= len(tokens):

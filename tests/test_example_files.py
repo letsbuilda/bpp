@@ -12,6 +12,7 @@ from bpp import Interpreter
     ("example_file", "expected_result"),
     [
         (Path("./examples/hello-world.bf"), "Hello, World!"),
+        (Path("./examples/hello-world-nested-loops.bf"), "hello world"),
         (Path("./examples/jump.bf"), ""),
         (Path("./examples/decrement_not_in_memory.bf"), ""),
     ],
