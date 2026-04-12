@@ -149,13 +149,13 @@ class Interpreter:
         # always non-empty when a LOOP_END token is encountered here.
         bracket_map: dict[int, int] = {}
         stack: list[int] = []
-        for i, token in enumerate(tokens):
+        for token_index, token in enumerate(tokens):
             if token == Token.LOOP_START:
-                stack.append(i)
+                stack.append(token_index)
             elif token == Token.LOOP_END:
-                j = stack.pop()
-                bracket_map[j] = i
-                bracket_map[i] = j
+                open_bracket_index = stack.pop()
+                bracket_map[open_bracket_index] = token_index
+                bracket_map[token_index] = open_bracket_index
 
         while True:
             token = tokens[self.current_index]
