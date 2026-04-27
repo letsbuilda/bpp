@@ -47,3 +47,20 @@ def tokenize(code: str) -> Sequence[Token]:
             continue
         tokens.append(token)
     return tokens
+
+
+def _tokenize_with_positions(code: str) -> Sequence[tuple[Token, int]]:
+    """Convert text to (token, original_char_index) tuples.
+
+    Returns
+    -------
+    A sequence of (token, original_char_index) tuples preserving the
+    character's position in the original source string.
+    """
+    tokens = []
+    for position, character in enumerate(code):
+        token = Token.from_character(character)
+        if token is None:
+            continue
+        tokens.append((token, position))
+    return tokens
