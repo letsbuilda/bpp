@@ -23,16 +23,16 @@ bpp = "bpp.cli:app"
 [dependency-groups]
 dev = [
     "nox>=2026.4.10",
-    "prek>=0.3.8",
-    "ruff>=0.15.10",
-    "mypy>=1.20.0",
-    "ty>=0.0.29",
+    "prek>=0.3.9",
+    "ruff>=0.15.11",
+    "mypy>=1.20.1",
+    "ty>=0.0.31",
 ]
 tests = [
     "pytest>=9.0.3",
     "coverage>=7.13.5",
     "pytest-randomly>=4.0.1",
-    "pytest-codspeed>=4.3.0",
+    "pytest-codspeed>=4.4.0",
 ]
 docs = [
     "sphinx>=8.1.0",
