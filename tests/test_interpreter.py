@@ -51,6 +51,9 @@ def test_can_input_letter(monkeypatch) -> None:  # type: ignore[no-untyped-def] 
     [
         ("[", "Syntax error: Unclosed bracket in line 1 at char 1!"),
         ("]", "Syntax error: Unexpected closing bracket in line 1 at char 1!"),
+        # Comments before brackets should not affect reported position
+        (">comment[", r"Syntax error: Unclosed bracket in line 1 at char 9!"),
+        (">comment]", r"Syntax error: Unexpected closing bracket in line 1 at char 9!"),
     ],
 )
 def test_invalid_syntax_fails(code: str, error_message: str) -> None:

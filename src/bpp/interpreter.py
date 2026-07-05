@@ -6,7 +6,7 @@ from io import StringIO
 from typing import TYPE_CHECKING, Self
 
 from .exceptions import BrainfuckSyntaxError
-from .tokens import Token, tokenize
+from .tokens import Token, _tokenize_with_positions
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
@@ -20,7 +20,7 @@ class ResultState(Enum):
     JUMP_BACKWARD = auto()
 
 
-def validate_syntax(syntax: Sequence[Sequence[Token]]) -> None:
+def validate_syntax(syntax: Sequence[Sequence[tuple[Token, int]]]) -> None:
     """Validate the given syntax.
 
     Raises
@@ -32,16 +32,16 @@ def validate_syntax(syntax: Sequence[Sequence[Token]]) -> None:
     loop_started_at_line = 0
     loop_started_at_character = 0
     for line_index, line in enumerate(syntax):
-        for character_index, token in enumerate(line):
+        for token, char_position in line:
             if token == Token.LOOP_START:
                 loop_started_at_line = line_index
-                loop_started_at_character = character_index
+                loop_started_at_character = char_position
                 depth += 1
             if token == Token.LOOP_END:
                 if depth == 0:
                     msg = (
                         "Syntax error: Unexpected closing bracket in line "
-                        f"{line_index + 1} at char {character_index + 1}!"
+                        f"{line_index + 1} at char {char_position + 1}!"
                     )
                     raise BrainfuckSyntaxError(msg)
                 depth -= 1
@@ -140,9 +140,9 @@ class Interpreter:
         -------
         The output of the code.
         """
-        syntax = [tokenize(line) for line in code.split("\n")]
+        syntax = [_tokenize_with_positions(line) for line in code.split("\n")]
         validate_syntax(syntax)
-        tokens = [token for line in syntax for token in line]
+        tokens = [token for line in syntax for token, _ in line]
 
         # Precompute matching bracket pairs to support nested loops.
         # validate_syntax guarantees brackets are balanced, so the stack is
