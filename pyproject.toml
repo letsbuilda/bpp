@@ -10,7 +10,7 @@ license-files = ["LICEN[CS]E*"]
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
-    "typer==0.26.7"
+    "typer==0.27.0"
 ]
 
 [project.urls]
@@ -22,15 +22,15 @@ bpp = "bpp.cli:app"
 
 [dependency-groups]
 dev = [
-    "nox>=2026.4.10",
-    "prek>=0.4.5",
-    "ruff>=0.15.19",
-    "mypy>=2.1.0",
-    "ty>=0.0.52",
+    "nox>=2026.7.11",
+    "prek>=0.4.11",
+    "ruff>=0.16.0",
+    "mypy>=2.3.0",
+    "ty>=0.0.63",
 ]
 tests = [
     "pytest>=9.1.1",
-    "coverage>=7.14.3",
+    "coverage>=7.15.2",
     "pytest-randomly>=4.1.0",
     "pytest-codspeed>=5.0.3",
 ]
@@ -42,7 +42,7 @@ docs = [
 ]
 
 [build-system]
-requires = ["setuptools>=82.0.1"]
+requires = ["setuptools>=83.0.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.ruff]
